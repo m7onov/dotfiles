@@ -23,6 +23,9 @@ Plug 'Houl/repmo-vim'
 Plug 'roxma/vim-tmux-clipboard'
 " yank stack
 Plug 'maxbrunsfeld/vim-yankstack'
+" YouCompleteMe
+Plug 'Valloric/YouCompleteMe'
+
 
 call plug#end()
 
@@ -340,4 +343,12 @@ function! AgCW(cmd)
 endfunction
 
 nnoremap <A-s> :call AgCW('Ag')<CR>
+
+" https://github.com/Valloric/YouCompleteMe#the-gycm_seed_identifiers_with_syntax-option
+nnoremap <C-g> YouCompleteMe GoTo
+let g:ycm_seed_identifiers_with_syntax=1
+let g:ycm_key_list_select_completion=['<C-j>', '<TAB>', '<Down>']
+let g:ycm_key_list_previous_completion=['<C-k>', '<S-TAB>', '<Up>']
+
+
 
