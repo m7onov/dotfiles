@@ -128,7 +128,9 @@ let NERDTreeMinimalUI = 0
 let NERDTreeDirArrows = 0
 let NERDTreeMapActivateNode='<space>'
 
-let g:NERDTreeWinSize = 30
+let g:NERDTreeWinSize = 50
+let g:NERDTreeFlagsAtTheEnd = 1
+let g:NERDTreeUpdateOnWrite = 0
 
 let g:airline_theme='dark_minimal'
 let g:airline_powerline_fonts = 0
@@ -350,6 +352,5 @@ nnoremap <C-g> :YcmCompleter GoTo<CR>
 let g:ycm_seed_identifiers_with_syntax=1
 let g:ycm_key_list_select_completion=['<C-j>', '<TAB>', '<Down>']
 let g:ycm_key_list_previous_completion=['<C-k>', '<S-TAB>', '<Up>']
-let g:ycm_key_list_stop_completion=['<CR>']
 
 
