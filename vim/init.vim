@@ -342,7 +342,10 @@ function! AgCW(cmd)
   execute a:cmd cw
 endfunction
 
+" search current word in fzf :Ag
 nnoremap <A-s> :call AgCW('Ag')<CR>
+" search current word in fzf :Files
+nnoremap <A-f> :call fzf#vim#files(getcwd() , {'options': '-q '.shellescape(expand('<cword>'))})<CR>
 
 " https://github.com/Valloric/YouCompleteMe#the-gycm_seed_identifiers_with_syntax-option
 nnoremap <C-g> :YcmCompleter GoTo<CR>
@@ -350,5 +353,8 @@ let g:ycm_seed_identifiers_with_syntax=1
 let g:ycm_key_list_select_completion=['<C-j>', '<TAB>', '<Down>']
 let g:ycm_key_list_previous_completion=['<C-k>', '<S-TAB>', '<Up>']
 let g:ycm_key_list_stop_completion=['<CR>']
+
+
+
 
 
