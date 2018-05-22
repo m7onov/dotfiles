@@ -1,7 +1,7 @@
 call plug#begin('~/.local/share/nvim/plugged')
 
 Plug 'majutsushi/tagbar'
-Plug 'scrooloose/nerdtree'
+Plug 'm7onov/nerdtree'
 Plug 'jistr/vim-nerdtree-tabs'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
