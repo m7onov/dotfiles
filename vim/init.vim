@@ -26,8 +26,10 @@ Plug 'roxma/vim-tmux-clipboard'
 Plug 'maxbrunsfeld/vim-yankstack'
 " YouCompleteMe
 Plug 'Valloric/YouCompleteMe'
+" Tabularize
+Plug 'godlygeek/tabular'
 
-
+call plug#end()
 call plug#end()
 
 set t_Co=256                  " for airline
@@ -199,18 +201,32 @@ set guioptions-=T  "remove toolbar
 set guioptions-=r  "remove right-hand scroll bar
 set guioptions-=L  "remove left-hand scroll bar
 set guifont=CodeNewRoman\ Nerd\ Font\ 9
-
 set tags=./tags;,tags;
-
-let g:indentLine_enabled = 0
 
 highlight Special ctermfg=173
 highlight String ctermfg=34
+highlight Search ctermbg=129 ctermfg=15
+nnoremap <Leader>h :set hlsearch!<CR>:set hlsearch?<CR>
+
+" search matching mapping
+nnoremap n nzz
+nnoremap N Nzz
+nnoremap * *zz
+nnoremap # #zz
+nnoremap g* g*zz
+nnoremap g# g#zz
+
+" disable * and # mapping in Mark-karkat
+nmap <Plug>IgnoreMarkSearchNext <Plug>MarkSearchNext
+nmap <Plug>IgnoreMarkSearchPrev <Plug>MarkSearchPrev
 
 " Fuzzy finder options
 let g:fzf_layout = { 'down': '~50%' }
 let g:fzf_files_options = '--preview "head -200 {}"'
 let g:fzf_history_dir = '~/.local/share/fzf-history'
+
+" Disable gitgutter mappings
+let g:gitgutter_map_keys = 0
 
 " Customize fzf colors to match your color scheme
 let g:fzf_colors =
