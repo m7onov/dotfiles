@@ -7,7 +7,7 @@ endfunction
 
 augroup prewrites
    autocmd!
-    autocmd BufWritePre,FileWritePre * :call TrimWhiteSpace()
+   autocmd BufWritePre,FileWritePre * :call TrimWhiteSpace()
 augroup END
 
 highlight ExtraWhitespace ctermbg=red guibg=red

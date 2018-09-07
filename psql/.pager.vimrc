@@ -1,11 +1,9 @@
 call plug#begin('~/.local/share/nvim/plugged')
-
-" Fuzzy Finder
-Plug '/usr/local/opt/fzf'
-Plug 'junegunn/fzf.vim'
-" Tmux clipboard integration
-Plug 'roxma/vim-tmux-clipboard'
-
+Plug        '$HOME/.fzf'
+Plug     'junegunn/fzf.vim'
+Plug        'roxma/vim-tmux-clipboard'
+Plug        'dim13/xedit.vim'
+Plug  'vim-scripts/Mark--Karkat'
 call plug#end()
 
 " No compatibility – necessary for mappings to work.
@@ -22,10 +20,9 @@ set incsearch                 " подсвечивать по мере поис�
 set cursorline                " show cursor line
 set cursorcolumn              " show cursor column
 set mouse=a
-
 " My xterms have a navy-blue background, so I need this line too.
-set background=dark
-set background=light
+"set background=dark
+"set background=light
 
 " Turn syntax on
 syntax enable

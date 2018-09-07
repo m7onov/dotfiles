@@ -93,6 +93,7 @@ source $ZSH/oh-my-zsh.sh
 PATH=$HOME/Script/bin:$PATH
 #PATH=$HOME/anaconda3/bin:$PATH
 PATH=/usr/local/pgsql/bin:$PATH
+PATH=$HOME/.npm-global/bin:$PATH
 
 # Fuzzy finder options
 export FZF_DEFAULT_COMMAND='ag -g ""'
