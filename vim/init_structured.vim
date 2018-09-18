@@ -20,6 +20,13 @@ Plug  'vim-scripts/Mark--Karkat'
 Plug         'Houl/repmo-vim'
 Plug    'godlygeek/tabular'
 Plug     'chrisbra/csv.vim'
+Plug        'dim13/xedit.vim'
+Plug      'terryma/vim-expand-region'
+
+Plug        'posva/vim-vue'
+Plug        'alvan/vim-closetag'
+Plug     'Valloric/MatchTagAlways'
+Plug        'mattn/emmet-vim'
 call plug#end()
 
 "
@@ -32,11 +39,6 @@ endfunction
 function! AgCW(cmd)
   let cw = expand('<cword>')
   execute a:cmd cw
-endfunction
-
-function! NerdTreeFindFunc()
-    NERDTreeFind
-    NERDTreeFocusToggle
 endfunction
 
 "
@@ -76,6 +78,7 @@ set cscopetag
 set cscopepathcomp=2
 set guicursor=                              "https://github.com/neovim/neovim/issues/5990
 set guifont=
+set termguicolors
 
 source $HOME/.config/nvim/scripts/BufOnly.vim
 source $HOME/.config/nvim/scripts/LessSpaceOnSave.vim
@@ -147,6 +150,8 @@ let g:airline_section_c = '%F'
 " ### vim-signify
 let g:signify_vcs_list = [ 'git', 'hg' ]
 let g:signify_realtime = 1
+let g:signify_cursorhold_normal = 0
+let g:signify_cursorhold_insert = 0
 " ### Mark-karkat
 nmap <Plug>IgnoreMarkSearchNext <Plug>MarkSearchNext
 nmap <Plug>IgnoreMarkSearchPrev <Plug>MarkSearchPrev
@@ -169,12 +174,15 @@ let g:fzf_colors =
 " https://github.com/junegunn/fzf.vim/issues/92#issuecomment-191248596
 function! s:ag_with_opts(arg, bang)
   let tokens  = split(a:arg)
-  let ag_opts = join(filter(copy(tokens), 'v:val =~ "^-"'))
+  let ag_opts = join(add(filter(copy(tokens), 'v:val =~ "^-"'), '--color-path="1;35"'))
   let query   = join(filter(copy(tokens), 'v:val !~ "^-"'))
-  call fzf#vim#ag(a:arg,
+  "put =ag_opts
+  "put =query
+  "call fzf#vim#ag(a:arg,
+  call fzf#vim#ag(query,
     \             ag_opts,
     \             a:bang ? fzf#vim#with_preview('up:60%')
-    \                    : fzf#vim#with_preview('right:70%:hidden', '?'),
+    \                    : fzf#vim#with_preview('right:60%:hidden', '?'),
     \             a:bang)
 endfunction
 " ### gitgutter
@@ -198,8 +206,8 @@ map <F7> :emenu Encoding.
 map <F8> :TagbarToggle<CR>
 map <S-F8> :TagbarShowTag<CR>
 nmap <leader>f :NERDTreeToggle<CR>
-nmap <leader>t :call NerdTreeFindFunc()<CR>:NERDTreeFocusToggle<CR>
-nnoremap `` :up<CR>
+nmap <leader>t :NERDTreeFind<CR>
+map <F2> :up<CR>
 nnoremap <leader>q :Bclose<CR>
 nnoremap <leader>d :Bclose!<CR>
 nnoremap <C-t> :enew<CR>
@@ -254,5 +262,18 @@ nmap <leader>P <Plug>yankstack_substitute_newer_paste
 nnoremap <A-s> :call AgCW('Ag')<CR>
 nnoremap <A-f> :call fzf#vim#files(getcwd() , {'options': '-q '.shellescape(expand('<cword>'))})<CR>
 nnoremap <C-g> :YcmCompleter GoTo<CR>
+vmap = <Plug>(expand_region_expand)
+vmap - <Plug>(expand_region_shrink)
+
+let g:mta_filetypes = {
+    \ 'html' : 1,
+    \ 'xhtml' : 1,
+    \ 'xml' : 1,
+    \ 'vue' : 1
+    \}
+nnoremap <leader>% :MtaJumpToOtherTag<cr>
+
+let g:user_emmet_leader_key='<C-Z>'
+let g:closetag_filenames = '*.html,*.xhtml,*.phtml,*.vue'
 
 
