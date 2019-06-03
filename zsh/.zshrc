@@ -90,9 +90,10 @@ source $ZSH/oh-my-zsh.sh
 ###################################################################
 # My changes
 
-PATH=$HOME/Documents/Script/bin:$PATH
-PATH=/usr/local/pgsql/bin:$PATH
-PATH=$HOME/.npm-global/bin:$PATH
+path+=$HOME/Documents/Script/bin
+path+=/usr/local/pgsql/bin
+path+=$HOME/.npm-global/bin
+path+=$HOME/.local/bin
 
 # Fuzzy finder options
 export FZF_DEFAULT_COMMAND='ag -g ""'

@@ -5,7 +5,10 @@
 \pset null ∅
 \set PROMPT1 '[%M]:%> %[%033[1;31m%]%x%[%033[0m%]%[%033[1m%]%/%[%033[0m%]%R%# '
 \timing
-\set ECHO errors
+\set ECHO none
+\set HISTCONTROL ignoredups
+\set HISTSIZE -1
 
 \set scheck 'SELECT p.oid, n.nspname, p.proname, plpgsql_check_function(p.oid) FROM pg_catalog.pg_namespace n JOIN pg_catalog.pg_proc p ON pronamespace = n.oid JOIN pg_catalog.pg_language l ON p.prolang = l.oid WHERE l.lanname = ''plpgsql'' AND p.prorettype <> 2279 AND n.nspname in ( ''marketplace'', ''ns'', ''amocrm'' ) ORDER BY n.nspname, p.proname'
 
+\set s '\\i /home/miha/Documents/Script/sql'
