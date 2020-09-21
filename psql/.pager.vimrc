@@ -1,9 +1,9 @@
 call plug#begin('~/.local/share/nvim/plugged')
-Plug        '$HOME/.fzf'
-Plug     'junegunn/fzf.vim'
-Plug        'roxma/vim-tmux-clipboard'
-Plug        'dim13/xedit.vim'
-Plug  'vim-scripts/Mark--Karkat'
+Plug '$HOME/.fzf'
+Plug 'junegunn/fzf.vim'
+Plug 'roxma/vim-tmux-clipboard'
+Plug 'dim13/xedit.vim'
+Plug 'inkarkat/vim-mark'
 call plug#end()
 
 " No compatibility – necessary for mappings to work.

@@ -1,8 +1,8 @@
 call plug#begin('~/.local/share/nvim/plugged')
 Plug '$HOME/.fzf'
 Plug 'junegunn/fzf.vim'
-Plug 'm7onov/nerdtree'
-Plug 'f4t-t0ny/nerdtree-hg-plugin'
+Plug 'scrooloose/nerdtree'
+Plug 'brentyi/nerdtree-hg-plugin'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -13,18 +13,15 @@ Plug 'mhinz/vim-signify'
 Plug 'will133/vim-dirdiff'
 Plug 'maxbrunsfeld/vim-yankstack'
 Plug 'lifepillar/pgsql.vim'
-Plug 'Valloric/YouCompleteMe'
 Plug 'majutsushi/tagbar'
 Plug 'vadimr/bclose.vim'
-Plug 'vim-scripts/Mark--Karkat'
-Plug 'Houl/repmo-vim'
+Plug 'inkarkat/vim-ingo-library'
+Plug 'inkarkat/vim-mark'
 Plug 'godlygeek/tabular'
 Plug 'chrisbra/csv.vim'
 Plug 'dim13/xedit.vim'
 Plug 'nightsense/simplifysimplify'
-Plug 'terryma/vim-expand-region'
 
-Plug 'posva/vim-vue'
 Plug 'alvan/vim-closetag'
 Plug 'Valloric/MatchTagAlways'
 Plug 'mattn/emmet-vim'
@@ -33,6 +30,8 @@ Plug 'SirVer/ultisnips'
 Plug 'Yggdroot/indentLine'
 
 Plug 'davidhalter/jedi-vim'
+
+Plug 'blueyed/vim-diminactive'
 call plug#end()
 
 "
@@ -44,6 +43,11 @@ function! SynStack()
   endif
   echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 endfunc
+
+function! AgBCW(cmd)
+  let cw = expand('<cword>')
+  execute a:cmd fnameescape(expand('%')) . ' ' . cw
+endfunction
 
 function! AgCW(cmd)
   let cw = expand('<cword>')
@@ -81,6 +85,7 @@ set cscopequickfix=s-,c-,d-,i-,t-,e-,a-     "cscope config
 set cscopetag
 set cscopepathcomp=2
 set termguicolors
+set nofixendofline
 
 let g:indentLine_enabled = 0
 
@@ -103,6 +108,12 @@ colorscheme simplifysimplify-light
 highlight MatchParen guibg=#E0E0E0
 highlight CursorColumn guibg=#F6F6F7
 highlight CursorLine guibg=#F6F6F7
+highlight Visual guibg=#F0E68C
+highlight NonText guifg=#B7FDD3
+highlight Search guibg=#B7FDD3
+highlight CursorColumn guibg=#FFE4C4
+highlight CursorLine guibg=#FFE4C4
+
 
 "
 " Autocommands
@@ -123,6 +134,8 @@ autocmd VimEnter * command! -nargs=* -bang Ag call s:ag_with_opts(<q-args>, <ban
 " =============================
 " ### pgsql
 let g:sql_type_default = 'pgsql'
+
+
 " ### nerdtree
 let NERDTreeMarkBookmarks = 1
 let NERDTreeShowBookmarks = 1
@@ -133,9 +146,11 @@ let NERDTreeShowLineNumbers=1
 let NERDTreeMinimalUI = 0
 let NERDTreeDirArrows = 0
 let NERDTreeMapActivateNode='<space>'
-let g:NERDTreeWinSize = 30
+let g:NERDTreeWinSize = 60
 let g:NERDTreeFlagsAtTheEnd = 1
 let g:NERDTreeUpdateOnWrite = 0
+
+
 let g:airline_theme='powerlineish' " good ones - powerlineish tomorrow base16 papercolor
 let g:airline_powerline_fonts = 0
 let g:airline#extensions#branch#enabled = 1
@@ -155,9 +170,6 @@ let g:signify_vcs_list = [ 'git', 'hg' ]
 let g:signify_realtime = 1
 let g:signify_cursorhold_normal = 0
 let g:signify_cursorhold_insert = 0
-" ### Mark-karkat
-nmap <Plug>IgnoreMarkSearchNext <Plug>MarkSearchNext
-nmap <Plug>IgnoreMarkSearchPrev <Plug>MarkSearchPrev
 " ### fzf
 let g:fzf_layout = { 'down': '~50%' }
 let g:fzf_files_options = '--preview "head -200 {}"'
@@ -166,7 +178,6 @@ let g:fzf_colors =
 \ { 'fg':      ['fg', 'Normal'],
   \ 'bg':      ['bg', 'Normal'],
   \ 'hl':      ['fg', 'Comment'],
-  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
   \ 'hl+':     ['fg', 'Statement'],
   \ 'info':    ['fg', 'PreProc'],
   \ 'prompt':  ['fg', 'Conditional'],
@@ -190,11 +201,6 @@ let g:gitgutter_map_keys = 0
 " ### dirdiff
 let g:DirDiffExcludes = ".DS_Store,.hg,.hgignore,_dev,_tests,patches,tests"
 let g:DirDiffWindowSize = 25
-" ### ycm
-" https://github.com/Valloric/YouCompleteMe#the-gycm_seed_identifiers_with_syntax-option
-let g:ycm_seed_identifiers_with_syntax=1
-let g:ycm_key_list_select_completion=['<C-j>', '<TAB>', '<Down>']
-let g:ycm_key_list_previous_completion=['<C-k>', '<S-TAB>', '<Up>']
 " ### csv
 let g:csv_highlight_column = 'n'
 let b:csv_arrange_align = 'l*'
@@ -233,43 +239,20 @@ map <C-h> <Esc>:Buffers<CR>
 map <C-p> :Files<CR>
 nnoremap <CR> i<CR><Esc>
 nnoremap <Leader>h :set hlsearch!<CR>:set hlsearch?<CR>
-" search matching mapping
-nnoremap n nzz
-nnoremap N Nzz
-nnoremap * *zz
-nnoremap # #zz
-nnoremap g* g*zz
-nnoremap g# g#zz
-" Buffer switching keys
-nnoremap - :bp<CR>
-nnoremap = :bn<CR>
-" map a motion and its reverse motion:
-noremap <expr> h repmo#SelfKey('h', 'l')|sunmap h
-noremap <expr> l repmo#SelfKey('l', 'h')|sunmap l
-" if you like `:noremap j gj', you can keep that:
-noremap <expr> j repmo#Key('gj', 'gk')|sunmap j
-noremap <expr> k repmo#Key('gk', 'gj')|sunmap k
-" repeat the last [count]motion or the last zap-key:
-map <expr> ; repmo#LastKey(';')|sunmap ;
-map <expr> , repmo#LastRevKey(',')|sunmap ,
-" add these mappings when repeating with `;' or `,':
-noremap <expr> f repmo#ZapKey('f')|sunmap f
-noremap <expr> F repmo#ZapKey('F')|sunmap F
-noremap <expr> t repmo#ZapKey('t')|sunmap t
-noremap <expr> T repmo#ZapKey('T')|sunmap T
-" Scroll commands
-noremap <expr> <C-E> repmo#SelfKey('<C-E>', '<C-Y>')
-noremap <expr> <C-Y> repmo#SelfKey('<C-Y>', '<C-E>')
 nmap <leader>p <Plug>yankstack_substitute_older_paste
 nmap <leader>P <Plug>yankstack_substitute_newer_paste
 nnoremap <A-s> :call AgCW('Ag')<CR>
 nnoremap <A-f> :call fzf#vim#files(getcwd() , {'options': '-q '.shellescape(expand('<cword>'))})<CR>
-nnoremap <C-g> :YcmCompleter GoTo<CR>
-vmap = <Plug>(expand_region_expand)
-vmap - <Plug>(expand_region_shrink)
+nnoremap <A-b> :BLines <CR>
+
 vmap <F9> y:silent call SendSelectionToPSQLTmuxPane()<CR>gv
 nmap <F9> m`vipy:silent call SendSelectionToPSQLTmuxPane()<CR>``
 vnoremap // y/<C-R>"<CR>
+" навигация по quickfix списку
+map <A-Down> :cn<CR>
+map <A-Up> :cp<CR>
+" не добавлять пробел при склейке строк
+nnoremap J gJ
 
 let g:mta_filetypes = {
     \ 'html' : 1,
@@ -281,18 +264,6 @@ nnoremap <leader>% :MtaJumpToOtherTag<cr>
 
 let g:closetag_filenames = '*.html,*.xhtml,*.phtml,*.vue'
 noremap <C-Y>k vat<Esc>da>`<da>
-
-let g:UltiSnipsExpandTrigger="<leader>]"
-let g:UltiSnipsJumpForwardTrigger="<c-b>"
-let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-let g:UltiSnipsSnippetDirectories="snippets"
-
-augroup BgHighlight
-    autocmd!
-    autocmd WinEnter * set cul cuc
-    autocmd WinLeave * set nocul nocuc
-augroup END
-
 
 " Скрывать status bar
 let s:hidden_all = 0
@@ -314,4 +285,7 @@ endfunction
 
 command! -bang -nargs=* History
   \ call fzf#vim#history({'options': '--no-sort'})
+
+let g:diminactive_use_colorcolumn = 0
+let g:diminactive_use_syntax = 1
 
